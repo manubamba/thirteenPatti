@@ -34,10 +34,15 @@ const defaultHeaderCellStyle = RX.Styles.createViewStyle({
     alignItems: "center",
     borderWidth: 1,
     borderColor: "#000",
-})
+});
+
+export interface Ifield {
+    fieldKey: string;
+    fieldText: string;
+}
 
 export interface ITableViewProps {
-    fieldNames: string[],
+    fields: Ifield[],
     rows: {[fieldName: string]: RX.Types.ComponentBase}[],
     tableRootStyle?: RX.Types.ViewStyle,
     tableHeaderStyle?: RX.Types.ViewStyle,
@@ -48,7 +53,7 @@ export interface ITableViewProps {
 }
 
 export default function TableView({
-    fieldNames,
+    fields,
     rows,
     tableRootStyle,
     tableHeaderStyle,
@@ -61,9 +66,9 @@ export default function TableView({
         <RX.View style={[defaultRootStyle, tableRootStyle]}>
             <RX.View style={[defaultHeaderStyle, tableHeaderStyle]}>
                 {
-                    fieldNames.map(field => (
-                        <RX.View key={field} style={[defaultHeaderCellStyle, tableHeaderCellStyle]}>
-                            <RX.Text>{field}</RX.Text>
+                    fields.map(field => (
+                        <RX.View key={field.fieldKey} style={[defaultHeaderCellStyle, tableHeaderCellStyle]}>
+                            <RX.Text>{field.fieldText}</RX.Text>
                         </RX.View>
                     ))
                 }
@@ -74,8 +79,8 @@ export default function TableView({
                         return (
                             <RX.View style={[defaultRowStyle, tableRowStyle]} key={indx}>
                                 {
-                                    fieldNames.map((field, indx2) => (
-                                        <RX.View key={"row" + indx + "-" + indx2} style={[defaultCellStyle, tableCellStyle]}>{row[field]}</RX.View>
+                                    fields.map((field, indx2) => (
+                                        <RX.View key={"row" + indx + "-" + indx2} style={[defaultCellStyle, tableCellStyle]}>{row[field.fieldKey]}</RX.View>
                                     ))
                                 }
                             </RX.View>
