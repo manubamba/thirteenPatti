@@ -1,13 +1,10 @@
 import * as RX from 'reactxp';
 
 const defaultRootStyle = RX.Styles.createViewStyle({
-    // borderWidth: 1,
-    // borderColor: "#eee"
+    
 });
 
 const defaultHeaderStyle = RX.Styles.createViewStyle({
-    borderWidth: 2,
-    borderColor: "#eee",
     flexDirection: "row"
 });
 
@@ -26,8 +23,18 @@ const defaultRowStyle = RX.Styles.createViewStyle({
 const defaultCellStyle = RX.Styles.createViewStyle({
     borderWidth: 1,
     borderColor: "#eee",
-    flexDirection: "column"
+    flexDirection: "column",
+    flex: 1,
+    alignItems: "center"
 });
+
+const defaultHeaderCellStyle = RX.Styles.createViewStyle({
+    flexDirection: "column",
+    flex: 1,
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#000",
+})
 
 export interface ITableViewProps {
     fieldNames: string[],
@@ -37,6 +44,7 @@ export interface ITableViewProps {
     tableBodyStyle?: RX.Types.ScrollViewStyle,
     tableRowStyle?: RX.Types.ViewStyle,
     tableCellStyle?: RX.Types.ViewStyle,
+    tableHeaderCellStyle?: RX.Types.ViewStyle,
 }
 
 export default function TableView({
@@ -46,39 +54,35 @@ export default function TableView({
     tableHeaderStyle,
     tableBodyStyle,
     tableRowStyle,
-    tableCellStyle
+    tableCellStyle,
+    tableHeaderCellStyle
 }: ITableViewProps) {
     return (
         <RX.View style={[defaultRootStyle, tableRootStyle]}>
             <RX.View style={[defaultHeaderStyle, tableHeaderStyle]}>
                 {
                     fieldNames.map(field => (
-                        <RX.View key={field}>
+                        <RX.View key={field} style={[defaultHeaderCellStyle, tableHeaderCellStyle]}>
                             <RX.Text>{field}</RX.Text>
                         </RX.View>
                     ))
                 }
             </RX.View>
-            <RX.View style={[defaultBodyStyle, tableBodyStyle]}>
+            <RX.ScrollView style={[defaultBodyStyle, tableBodyStyle]}>
                 {
                     rows.map((row, indx) => {
-                        // let cellsArr = [];
-                        // for(let fieldName in fieldNames) {
-                        //     let cellComp = <RX.View key={fieldName + "-cell-" + indx} style={[defaultCellStyle, tableCellStyle]}>{row[fieldName]}</RX.View>
-                        //     cellsArr.push(cellComp);
-                        // }
                         return (
                             <RX.View style={[defaultRowStyle, tableRowStyle]} key={indx}>
                                 {
                                     fieldNames.map((field, indx2) => (
-                                        <RX.View key={"row" + indx + "-" + indx2}>{row[field]}</RX.View>
+                                        <RX.View key={"row" + indx + "-" + indx2} style={[defaultCellStyle, tableCellStyle]}>{row[field]}</RX.View>
                                     ))
                                 }
                             </RX.View>
                         )
                     })
                 }
-            </RX.View>
+            </RX.ScrollView>
         </RX.View>
     )
 }
