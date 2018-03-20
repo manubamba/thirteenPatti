@@ -17,6 +17,22 @@
     react-inspector "^2.2.2"
     uuid "^3.1.0"
 
+"@storybook/addon-knobs@^3.3.15":
+  version "3.3.15"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-knobs/-/addon-knobs-3.3.15.tgz#b18b067900682deef314785db99dee90a84a8f97"
+  dependencies:
+    babel-runtime "^6.26.0"
+    deep-equal "^1.0.1"
+    global "^4.3.2"
+    insert-css "^2.0.0"
+    lodash.debounce "^4.0.8"
+    moment "^2.20.1"
+    prop-types "^15.6.0"
+    react-color "^2.11.4"
+    react-datetime "^2.11.1"
+    react-textarea-autosize "^5.2.1"
+    util-deprecate "^1.0.2"
+
 "@storybook/addon-links@^3.3.15":
   version "3.3.15"
   resolved "https://registry.yarnpkg.com/@storybook/addon-links/-/addon-links-3.3.15.tgz#b0ad4151de729aaa134ece86947e9df951583afe"
@@ -4945,6 +4961,10 @@ inquirer@^5.1.0:
     strip-ansi "^4.0.0"
     through "^2.3.6"
 
+insert-css@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/insert-css/-/insert-css-2.0.0.tgz#eb5d1097b7542f4c79ea3060d3aee07d053880f4"
+
 interpret@^1.0.0, interpret@^1.0.4:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.1.0.tgz#7ed1b1410c6a0e0f78cf95d3b8440c63f78b8614"
@@ -5797,7 +5817,7 @@ lodash@^3.1.0, lodash@^3.10.1, lodash@^3.2.0, lodash@^3.3.1, lodash@^3.5.0:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
 
-lodash@^4.11.1, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.16.6, lodash@^4.17.0, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.1:
+lodash@^4.0.1, lodash@^4.11.1, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.16.6, lodash@^4.17.0, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.1:
   version "4.17.5"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.5.tgz#99a92d65c0272debe8c96b6057bc8fbfa3bed511"
 
@@ -5904,6 +5924,10 @@ markdown-loader@^2.0.1:
 marked@^0.3.9:
   version "0.3.17"
   resolved "https://registry.yarnpkg.com/marked/-/marked-0.3.17.tgz#607f06668b3c6b1246b28f13da76116ac1aa2d2b"
+
+material-colors@^1.2.1:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/material-colors/-/material-colors-1.2.5.tgz#5292593e6754cb1bcc2b98030e4e0d6a3afc9ea1"
 
 math-expression-evaluator@^1.2.14:
   version "1.2.17"
@@ -6221,6 +6245,10 @@ mixin-deep@^1.2.0:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   dependencies:
     minimist "0.0.8"
+
+moment@^2.20.1:
+  version "2.21.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.21.0.tgz#2a114b51d2a6ec9e6d83cf803f838a878d8a023a"
 
 morgan@~1.6.1:
   version "1.6.1"
@@ -7307,7 +7335,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.8, prop-types@^15.5.9, prop-types@^15.6.0:
+prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.5.9, prop-types@^15.6.0:
   version "15.6.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.1.tgz#36644453564255ddda391191fb3a125cbdf654ca"
   dependencies:
@@ -7473,6 +7501,25 @@ react-clone-referenced-element@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/react-clone-referenced-element/-/react-clone-referenced-element-1.0.1.tgz#2bba8c69404c5e4a944398600bcc4c941f860682"
 
+react-color@^2.11.4:
+  version "2.14.0"
+  resolved "https://registry.yarnpkg.com/react-color/-/react-color-2.14.0.tgz#5828a11c034aa0939befbd888a066ee37d8c3cc2"
+  dependencies:
+    lodash "^4.0.1"
+    material-colors "^1.2.1"
+    prop-types "^15.5.10"
+    reactcss "^1.2.0"
+    tinycolor2 "^1.4.1"
+
+react-datetime@^2.11.1:
+  version "2.14.0"
+  resolved "https://registry.yarnpkg.com/react-datetime/-/react-datetime-2.14.0.tgz#c7859c5b765275d7980f1cca27c03a727ff9ccef"
+  dependencies:
+    create-react-class "^15.5.2"
+    object-assign "^3.0.0"
+    prop-types "^15.5.7"
+    react-onclickoutside "^6.5.0"
+
 react-deep-force-update@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/react-deep-force-update/-/react-deep-force-update-1.1.1.tgz#bcd31478027b64b3339f108921ab520b4313dc2c"
@@ -7631,6 +7678,10 @@ react-native@^0.53.0:
     xmldoc "^0.4.0"
     yargs "^9.0.0"
 
+react-onclickoutside@^6.5.0:
+  version "6.7.1"
+  resolved "https://registry.yarnpkg.com/react-onclickoutside/-/react-onclickoutside-6.7.1.tgz#6a5b5b8b4eae6b776259712c89c8a2b36b17be93"
+
 react-proxy@^1.1.7:
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/react-proxy/-/react-proxy-1.1.8.tgz#9dbfd9d927528c3aa9f444e4558c37830ab8c26a"
@@ -7651,6 +7702,12 @@ react-style-proptype@^3.0.0:
   resolved "https://registry.yarnpkg.com/react-style-proptype/-/react-style-proptype-3.2.1.tgz#7cfeb9b87ec7ab9dcbde9715170ed10c11fb86aa"
   dependencies:
     prop-types "^15.5.4"
+
+react-textarea-autosize@^5.2.1:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/react-textarea-autosize/-/react-textarea-autosize-5.2.1.tgz#2b78f9067180f41b08ac59f78f1581abadd61e54"
+  dependencies:
+    prop-types "^15.6.0"
 
 react-timer-mixin@^0.13.2:
   version "0.13.3"
@@ -7692,6 +7749,12 @@ react@16.2.0:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.0"
+
+reactcss@^1.2.0:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/reactcss/-/reactcss-1.2.3.tgz#c00013875e557b1cf0dfd9a368a1c3dab3b548dd"
+  dependencies:
+    lodash "^4.0.1"
 
 reactxp-experimental-navigation@^1.0.11:
   version "1.0.12"
@@ -9064,6 +9127,10 @@ timers-browserify@^2.0.4:
   resolved "https://registry.yarnpkg.com/timers-browserify/-/timers-browserify-2.0.6.tgz#241e76927d9ca05f4d959819022f5b3664b64bae"
   dependencies:
     setimmediate "^1.0.4"
+
+tinycolor2@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/tinycolor2/-/tinycolor2-1.4.1.tgz#f4fad333447bc0b07d4dc8e9209d8f39a8ac77e8"
 
 tmp@^0.0.29:
   version "0.0.29"
