@@ -106,6 +106,8 @@ function InitializeSessionNamespace(sessionId, io) {
             Log('Before nextstory: ' + JSON.stringify(sessionStates[sessionId]));
             NextStory(sessionId);
             Log('After nextstory: ' + JSON.stringify(sessionStates[sessionId]));
+
+            nsp.emit('updatestate', sessionStates[sessionId]);
         });
 
         // previousstory - () => ()
@@ -113,6 +115,8 @@ function InitializeSessionNamespace(sessionId, io) {
             Log('Before previousstory: ' + JSON.stringify(sessionStates[sessionId]));
             PreviousStory(sessionId);
             Log('After previousstory: ' + JSON.stringify(sessionStates[sessionId]));
+
+            nsp.emit('updatestate', sessionStates[sessionId]);
         });
     });
 }
