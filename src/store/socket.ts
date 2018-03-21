@@ -28,6 +28,9 @@ export function initCommunication(sessionId: number) {
     //     badParticipantId: 1,
     // });
 
+    // io.emit('nextstory');
+    // io.emit('previousstory');
+
     return io;
 }
 

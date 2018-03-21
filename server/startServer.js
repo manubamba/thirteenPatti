@@ -100,6 +100,20 @@ function InitializeSessionNamespace(sessionId, io) {
 
             nsp.emit('updatestate', sessionStates[sessionId]);
         });
+
+        // nextstory - () => ()
+        socket.on('nextstory', () => {
+            Log('Before nextstory: ' + JSON.stringify(sessionStates[sessionId]));
+            NextStory(sessionId);
+            Log('After nextstory: ' + JSON.stringify(sessionStates[sessionId]));
+        });
+
+        // previousstory - () => ()
+        socket.on('previousstory', () => {
+            Log('Before previousstory: ' + JSON.stringify(sessionStates[sessionId]));
+            PreviousStory(sessionId);
+            Log('After previousstory: ' + JSON.stringify(sessionStates[sessionId]));
+        });
     });
 }
 
@@ -221,6 +235,25 @@ function KickUser(sessionId, participantId, badParticipantId) {
             votes.splice(i, 1);
         }
         i++;
+    }
+}
+
+/**
+ * Navigate to the next story
+ */
+function NextStory(sessionId) {
+    var sessionState = sessionStates[sessionId];
+    sessionState.currentStoryIndex = (sessionState.currentStoryIndex + 1) % sessionState.stories.length;
+}
+
+/**
+ * Navigate to the previous story
+ */
+function PreviousStory(sessionId) {
+    var sessionState = sessionStates[sessionId];
+    sessionState.currentStoryIndex--;
+    if (sessionState.currentStoryIndex == -1) {
+        sessionState.currentStoryIndex = sessionState.stories.length - 1;
     }
 }
 
