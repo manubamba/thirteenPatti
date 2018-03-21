@@ -43,7 +43,7 @@ export interface Ifield {
 
 export interface ITableViewProps {
     fields: Ifield[],
-    rows: {[fieldName: string]: RX.Types.ComponentBase}[],
+    rows: {[fieldName: string]: JSX.Element}[],
     tableRootStyle?: RX.Types.ViewStyle,
     tableHeaderStyle?: RX.Types.ViewStyle,
     tableBodyStyle?: RX.Types.ScrollViewStyle,

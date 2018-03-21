@@ -12,8 +12,8 @@ export interface IStory {
 }
 
 export enum EStoryState {
-    INACTIVE,
-    ACTIVE,
-    DISCUSSION,
-    FINALISED
+    INACTIVE = 'inactive',
+    ACTIVE = 'active',
+    DISCUSSION = 'discussion',
+    FINALISED = 'finalised'
 }
