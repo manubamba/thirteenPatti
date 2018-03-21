@@ -10,11 +10,17 @@ import SecondPanel from './SecondPanel';
 import MainPageContainer from './containers/MainPageContainer';
 import { Provider } from 'react-redux';
 import store from './store/getStore';
+import CreateSessionContainer from './containers/CreateSessionContainer';
+import CommonJoinContainer from './containers/CommonJoinContainer';
+import SharedJoinContainer from './containers/SharedJoinContainer';
+
 import socket from './store/socket';
 console.log(socket);
 enum NavigationRouteId {
-    MainPanel,
-    SecondPanel
+    CreateSession,
+    JoinSession,
+    JoinSharedSession,
+    MainStory
 }
 
 const styles = {
@@ -29,19 +35,21 @@ class App extends RX.Component<{}, null> {
 
     componentDidMount() {
         this._navigator.immediatelyResetRouteStack([{
-            routeId: NavigationRouteId.MainPanel,
+            routeId: NavigationRouteId.CreateSession,
             sceneConfigType: Types.NavigatorSceneConfigType.Fade
         }]);
     }
 
     render() {
         return (
-            <Navigator
-                ref={ this._onNavigatorRef }
-                renderScene={ this._renderScene }
-                cardStyle={ styles.navCardStyle }
-                delegateSelector={ DelegateSelector }
-            />
+            <Provider store={store}>
+                <Navigator
+                    ref={ this._onNavigatorRef }
+                    renderScene={ this._renderScene }
+                    cardStyle={ styles.navCardStyle }
+                    delegateSelector={ DelegateSelector }
+                />
+            </Provider>
         );
     }
 
@@ -50,12 +58,16 @@ class App extends RX.Component<{}, null> {
     }
 
     private _renderScene = (navigatorRoute: Types.NavigatorRoute) => {
+        const navProp = {navigator: this._navigator};
         switch (navigatorRoute.routeId) {
-            case NavigationRouteId.MainPanel:
-                return <Provider store={store}><MainPageContainer/></Provider>;
-
-            case NavigationRouteId.SecondPanel:
-                return <SecondPanel onNavigateBack={ this._onPressBack } />;
+            case NavigationRouteId.MainStory:
+                return <MainPageContainer {...navProp} />;
+            case NavigationRouteId.CreateSession:
+                return <CreateSessionContainer {...navProp} />;
+            case NavigationRouteId.JoinSession:
+                return <CommonJoinContainer {...navProp} />;
+            case NavigationRouteId.JoinSharedSession:
+                return <SharedJoinContainer {...navProp} />;
         }
 
         return null;
@@ -63,7 +75,7 @@ class App extends RX.Component<{}, null> {
 
     private _onPressNavigate = () => {
         this._navigator.push({
-            routeId: NavigationRouteId.SecondPanel,
+            routeId: NavigationRouteId.MainStory,
             sceneConfigType: Types.NavigatorSceneConfigType.FloatFromRight
         });
     }

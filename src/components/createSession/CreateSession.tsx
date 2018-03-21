@@ -1,14 +1,5 @@
 import * as RX from 'reactxp';
-
-export interface CreateSessionProps {
-    onClickCreate: (name: string, sessionName?: string) => void
-}
-
-export interface CreateSessionState {
-    name?: string;
-    sessionName?: string;
-    hasError: boolean
-}
+import { CreateSessionProps, CreateSessionState } from '../../interfaces/CreateSession';
 
 export default class CreateSession extends RX.Component<CreateSessionProps, CreateSessionState> {
     constructor(props: CreateSessionProps) {
@@ -21,7 +12,7 @@ export default class CreateSession extends RX.Component<CreateSessionProps, Crea
     private handleCreate = () => {
         const {name, sessionName} = this.state;
         if (name) {
-            this.props.onClickCreate(name, sessionName);
+            this.props.createSession(name, sessionName);
         } else {
             this.setState({hasError: true});
         }
@@ -41,7 +32,6 @@ export default class CreateSession extends RX.Component<CreateSessionProps, Crea
     }
 
     render() {
-        const {onClickCreate} = this.props;
         const {name, sessionName, hasError} = this.state;
         return (
             <RX.View>

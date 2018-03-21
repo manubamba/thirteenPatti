@@ -2,23 +2,9 @@ import * as RX from 'reactxp';
 import StoryPoints from './StoryPoints';
 import LeftPanel from '../LeftPanel/LeftPanel';
 import { EStoryState, IPerson } from '../../interfaces/commonInterfaces';
+import { MainPageState, MainPageProps } from '../../interfaces/MainPage';
 
-
-export interface MainPageProps {
-    sessionId: any;
-    storyTitle?: string;
-    isAdmin?: boolean;
-    onClickResetVotes: () => void;
-    onClickFinalize: () => void;
-}
-
-export interface MainPageState {
-    finalPoints?: string;
-    selectedPoints?: string;
-    storyTitle?: string;
-}
-
-export default class MainPage extends RX.Component<any, MainPageState> {
+export default class MainPage extends RX.Component<MainPageProps, MainPageState> {
     constructor(props: any) {
         super(props);
         this.state = {};
@@ -41,34 +27,15 @@ export default class MainPage extends RX.Component<any, MainPageState> {
         this.props.onClickFinalize(this.state.finalPoints);
     }
     render() {
-        const {sessionId, isAdmin, onClickResetVotes, onClickFinalize} = this.props;
+        const {
+            sessionId,
+            currentUser,
+            onClickResetVotes,
+            onClickFinalize,
+            participants,
+            storyStatus
+        } = this.props;
         const {selectedPoints, finalPoints, storyTitle} = this.state;
-        const allPersons: IPerson[] = [
-            {
-                name: "Vineet",
-                id: 1,
-                estimate: 5,
-                isAdmin: false
-            },
-            {
-                name: "Manik",
-                id: 2,
-                estimate: 6,
-                isAdmin: true
-            },
-            {
-                name: "Manu",
-                id: 3,
-                estimate: 4,
-                isAdmin: false
-            },
-            {
-                name: "Rakesh",
-                id: 4,
-                estimate: 5,
-                isAdmin: true
-            }
-        ];
         
         const props = {
             kickOut: (personId: number) => {
@@ -77,9 +44,9 @@ export default class MainPage extends RX.Component<any, MainPageState> {
             toggleAdmin: (personId: number) => {
                 console.log("toggling the admin status of person with personId: " + personId);
             },
-            persons: allPersons,
-            currentPerson: allPersons[0],
-            storyStatus: EStoryState.DISCUSSION
+            persons: participants,
+            currentPerson: participants[0],
+            storyStatus
         }
         return (
             <RX.ScrollView>
@@ -93,7 +60,7 @@ export default class MainPage extends RX.Component<any, MainPageState> {
                 </RX.View>
                 <LeftPanel {...props}/>
                 <StoryPoints onClickItem={this.handleStoryPointClick} chosenValue={selectedPoints}/>
-                {isAdmin && <RX.View>
+                {currentUser.isAdmin && <RX.View>
                     <RX.Button onPress={onClickResetVotes}>Reset Votes</RX.Button>
                     <RX.TextInput placeholder="Final Value" onChangeText={this.handleFinalPointsChange} value={finalPoints}/>
                     <RX.Button onPress={this.handleFinalize}>Finalize</RX.Button>
