@@ -10,6 +10,7 @@ module.exports = {
   plugins: [
     // your custom plugins
   ],
+  devtool: "source-map",
   module: {
     rules: [
       // add your custom rules.
