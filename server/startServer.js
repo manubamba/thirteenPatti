@@ -2,7 +2,7 @@
  How to use sockets in client:
  export function initCommunication() {
     console.log('initializing');
-    io = socket('http://localhost:3001/');
+    io = socket('http://localhost:3001/<sessionid>');
     io.on('updatestate', state => {
         stateMutator(state);
     });
@@ -30,7 +30,10 @@ function startServer() {
     // CreateSession - (SessionTitle, UserName) => (ParticipantId, state)
     app.post('/createsession', (req, res) => {
         Log('Creating new session');
-        res.send(CreateSession(req.body.sessionTitle, req.body.userName));
+        var response = CreateSession(req.body.sessionTitle, req.body.userName);
+
+        InitializeSessionNamespace(response.state.sessionId, io);
+        res.send(response);
     });
 
     // JoinSession - (SessionId, UserName) => (ParticipantId, state)
@@ -39,46 +42,6 @@ function startServer() {
         res.send(JoinSession(req.body.sessionId, req.body.userName));
     });
 
-    // Initializing web sockets
-    io.on('connection', (socket) => { 
-        Log('User connected');
-
-        // Clean up
-        socket.on('disconnect', reason => Log('Disconnected: ' + reason));
-
-        // Vote - (sessionId, participantId, estimate) => ()
-        socket.on('vote', state => {
-            Log('Before voting: ' + sessionStates[state.sessionId]);
-            Vote(state.sessionId, state.participantId, state.estimate);
-            Log('After voting: ' + sessionStates[state.sessionId]);
-
-            // let updatedState = state;
-            // updatedState.sessionId++;
-            // io.emit('updatestate', updatedState);
-        });
-
-        // finalize - (sessionId, participantId, estimate) => ()
-        socket.on('finalize', state => {
-            Log('Before Finalizing: ' + sessionStates[state.sessionId]);
-            Finalize(state.sessionId, state.participantId, state.estimate);
-            Log('After Finalizing: ' + sessionStates[state.sessionId]);
-
-        });
-
-        // resetvotes - (sessionId, participantId) => ()
-        socket.on('resetvotes', state => {
-            Log('Before Resetting votes: ' + sessionStates[state.sessionId]);
-            ResetVotes(state.sessionId, state.participantId);
-            Log('After Resetting votes: ' + sessionStates[state.sessionId]);
-        });
-
-        // kickuser - (sessionId, participantId, badParticipantId) => ()
-        socket.on('kickuser', state => {
-            Log('Before kicking: ' + sessionStates[state.sessionId]);
-            KickUser(state.sessionId, state.participantId, state.badParticipantId);
-            Log('After kicking: ' + sessionStates[state.sessionId]);
-        });
-    });
     http.listen(3001, () => Log('listening on port 3001'));
 }
 
@@ -86,6 +49,60 @@ startServer();
 
 var sessionStates = {};
 var nextParticipantId = 0;
+
+/**
+ * Initializes the session namespace
+ * @param {id of the session} sessionId 
+ * @param {io object} io 
+ */
+function InitializeSessionNamespace(sessionId, io) {
+    var namespaceName = '/' + sessionId;
+    var nsp = io.of(namespaceName);
+
+    nsp.on('connection', (socket) => { 
+        Log('User connected');
+        Log(socket);
+
+        // Clean up
+        socket.on('disconnect', reason => Log('Disconnected: ' + reason));
+
+        // Vote - (participantId, estimate) => ()
+        socket.on('vote', state => {
+            Log('Before voting: ' + sessionStates[sessionId]);
+            Vote(sessionId, state.participantId, state.estimate);
+            Log('After voting: ' + sessionStates[sessionId]);
+
+            nsp.emit('updatestate', sessionStates[sessionId]);
+        });
+
+        // finalize - (participantId, estimate) => ()
+        socket.on('finalize', state => {
+            Log('Before Finalizing: ' + sessionStates[sessionId]);
+            Finalize(sessionId, state.participantId, state.estimate);
+            Log('After Finalizing: ' + sessionStates[sessionId]);
+
+            nsp.emit('updatestate', sessionStates[sessionId]);
+        });
+
+        // resetvotes - (participantId) => ()
+        socket.on('resetvotes', state => {
+            Log('Before Resetting votes: ' + sessionStates[sessionId]);
+            ResetVotes(sessionId, state.participantId);
+            Log('After Resetting votes: ' + sessionStates[sessionId]);
+
+            nsp.emit('updatestate', sessionStates[sessionId]);
+        });
+
+        // kickuser - (participantId, badParticipantId) => ()
+        socket.on('kickuser', state => {
+            Log('Before kicking: ' + sessionStates[sessionId]);
+            KickUser(sessionId, state.participantId, state.badParticipantId);
+            Log('After kicking: ' + sessionStates[sessionId]);
+
+            nsp.emit('updatestate', sessionStates[sessionId]);
+        });
+    });
+}
 
 /**
  * Creates the session
