@@ -159,4 +159,4 @@ class SecondPanel extends RX.Component<SecondPanelProps, SecondPanelState> {
     }
 }
 
-export = SecondPanel;
+export default SecondPanel;

@@ -61,7 +61,6 @@ function InitializeSessionNamespace(sessionId, io) {
 
     nsp.on('connection', (socket) => { 
         Log('User connected');
-        Log(socket);
 
         // Clean up
         socket.on('disconnect', reason => Log('Disconnected: ' + reason));

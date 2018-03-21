@@ -1,5 +1,5 @@
-import RX = require('reactxp');
-import App = require('./App');
+import * as RX from 'reactxp';
+import App from './App';
 
 RX.App.initialize(true, true);
 RX.UserInterface.setMainView(<App />);
