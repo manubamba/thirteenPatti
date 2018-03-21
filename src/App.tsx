@@ -11,7 +11,7 @@ import MainPageContainer from './containers/MainPageContainer';
 import { Provider } from 'react-redux';
 import store from './store/getStore';
 import socket from './store/socket';
-
+console.log(socket);
 enum NavigationRouteId {
     MainPanel,
     SecondPanel

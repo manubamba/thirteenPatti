@@ -67,36 +67,36 @@ function InitializeSessionNamespace(sessionId, io) {
 
         // Vote - (participantId, estimate) => ()
         socket.on('vote', state => {
-            Log('Before voting: ' + sessionStates[sessionId]);
+            Log('Before voting: ' + JSON.stringify(sessionStates[sessionId]));
             Vote(sessionId, state.participantId, state.estimate);
-            Log('After voting: ' + sessionStates[sessionId]);
+            Log('After voting: ' + JSON.stringify(sessionStates[sessionId]));
 
             nsp.emit('updatestate', sessionStates[sessionId]);
         });
 
         // finalize - (participantId, estimate) => ()
         socket.on('finalize', state => {
-            Log('Before Finalizing: ' + sessionStates[sessionId]);
+            Log('Before Finalizing: ' + JSON.stringify(sessionStates[sessionId]));
             Finalize(sessionId, state.participantId, state.estimate);
-            Log('After Finalizing: ' + sessionStates[sessionId]);
+            Log('After Finalizing: ' + JSON.stringify(sessionStates[sessionId]));
 
             nsp.emit('updatestate', sessionStates[sessionId]);
         });
 
         // resetvotes - (participantId) => ()
         socket.on('resetvotes', state => {
-            Log('Before Resetting votes: ' + sessionStates[sessionId]);
+            Log('Before Resetting votes: ' + JSON.stringify(sessionStates[sessionId]));
             ResetVotes(sessionId, state.participantId);
-            Log('After Resetting votes: ' + sessionStates[sessionId]);
+            Log('After Resetting votes: ' + JSON.stringify(sessionStates[sessionId]));
 
             nsp.emit('updatestate', sessionStates[sessionId]);
         });
 
         // kickuser - (participantId, badParticipantId) => ()
         socket.on('kickuser', state => {
-            Log('Before kicking: ' + sessionStates[sessionId]);
+            Log('Before kicking: ' + JSON.stringify(sessionStates[sessionId]));
             KickUser(sessionId, state.participantId, state.badParticipantId);
-            Log('After kicking: ' + sessionStates[sessionId]);
+            Log('After kicking: ' + JSON.stringify(sessionStates[sessionId]));
 
             nsp.emit('updatestate', sessionStates[sessionId]);
         });
@@ -157,7 +157,7 @@ function JoinSession(sessionId, userName) {
  */
 function Vote(sessionId, participantId, estimate) {
     let votes = sessionStates[sessionId].votes;
-    for(var vote in votes) {
+    for(var vote of votes) {
         if (vote.participantId == participantId) {
             vote.estimate = estimate;
             return;
@@ -197,7 +197,7 @@ function ResetVotes(sessionId, participantId) {
     }
 
     let sessionState = sessionStates[sessionId];
-    for (var vote in sessionState.votes) {
+    for (var vote of sessionState.votes) {
         vote.estimate = undefined;
     }
 }
@@ -216,7 +216,7 @@ function KickUser(sessionId, participantId, badParticipantId) {
 
     let votes = sessionStates[sessionId].votes;
     var i = 0;
-    for(var vote in votes) {
+    for(var vote of votes) {
         if (vote.participantId == participantId) {
             votes.splice(i, 1);
         }
@@ -233,7 +233,7 @@ function Log(line) {
 
 function isAdmin(sessionId, participantId) {
     let sessionState = sessionStates[sessionId];
-    for(var vote in sessionState.votes) {
+    for(var vote of sessionState.votes) {
         if (vote.participantId == participantId) {
             return vote.isAdmin;
         }

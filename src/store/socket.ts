@@ -6,12 +6,30 @@ export function initCommunication(sessionId: number) {
     io.on('updatestate', (state: any) => {
         console.log(state);
     });
-    io.emit('vote', {
-        participantId: 0,
-        estimate: 1
-    })
+
+    // Tests below
+
+    // io.emit('vote', {
+    //     participantId: 0,
+    //     estimate: 1
+    // });
+
+    // io.emit('finalize', {
+    //     participantId: 0,
+    //     estimate: 10,
+    // });
+
+    // io.emit('resetvotes', {
+    //     participantId: 0,
+    // });
+
+    // io.emit('kickuser', {
+    //     participantId: 0,
+    //     badParticipantId: 1,
+    // });
+
     return io;
 }
 
-export default initCommunication(16626);
+export default initCommunication(12345);
 
