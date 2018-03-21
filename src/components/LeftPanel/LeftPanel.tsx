@@ -3,11 +3,11 @@ import { IPerson, EStoryState } from '../../interfaces/commonInterfaces';
 import TableView, {ITableViewProps, Ifield} from "../TableView/TableView";
 
 export interface ILeftPanelProps {
-    kickOut: (personId: number) => void,
-    toggleAdmin: (personId: number) => void,
-    persons: IPerson[],
-    currentPerson: IPerson,
-    storyStatus: EStoryState.ACTIVE | EStoryState.DISCUSSION | EStoryState.FINALISED
+    kickOut: (personId: number) => void;
+    toggleAdmin: (personId: number) => void;
+    persons: IPerson[];
+    currentPerson: IPerson;
+    storyStatus: EStoryState;
 }
 
 interface IAdminProps {

@@ -7,6 +7,10 @@ import RX = require('reactxp');
 
 import MainPanel = require('./MainPanel');
 import SecondPanel = require('./SecondPanel');
+import MainPageContainer from './containers/MainPageContainer';
+import { Provider } from 'react-redux';
+import store from './store/getStore';
+
 
 enum NavigationRouteId {
     MainPanel,
@@ -48,7 +52,7 @@ class App extends RX.Component<{}, null> {
     private _renderScene = (navigatorRoute: Types.NavigatorRoute) => {
         switch (navigatorRoute.routeId) {
             case NavigationRouteId.MainPanel:
-                return <MainPanel onPressNavigate={ this._onPressNavigate } />;
+                return <Provider store={store}><MainPageContainer/></Provider>;
 
             case NavigationRouteId.SecondPanel:
                 return <SecondPanel onNavigateBack={ this._onPressBack } />;
