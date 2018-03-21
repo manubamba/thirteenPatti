@@ -4,7 +4,8 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "web-watch": "webpack-dev-server --progress --colors --watch",
+    "server": "node server/startServer",
+    "web": "webpack-dev-server --progress --colors --watch -d",
     "rn-watch": "tsc --watch",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "android": "node node_modules/react-native/local-cli/cli.js run-android",
