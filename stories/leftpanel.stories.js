@@ -42,7 +42,7 @@ const props = {
         console.log("toggling the admin status of person with personId: " + personId);
     },
     persons: allPersons,
-    currentPerson: allPersons[1],
+    currentPerson: allPersons[0],
     storyStatus: 'discussion'
 }
 

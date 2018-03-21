@@ -1,7 +1,7 @@
 import * as RX from 'reactxp';
 
 export interface StoryPointsProps {
-    onClickItem: (key: string) => () => void;
+    onClickItem: (key: string) => void;
     chosenValue?: string;
     finalValue?: string;
 }
@@ -73,7 +73,10 @@ export default class StoryPoints extends RX.Component<StoryPointsProps, any> {
         }
         return (
             <RX.View>
-                {STORYPOINTS.map(({key, label}) => <RX.Button key={key} onPress={onClickItem(key)}>{label}</RX.Button>)}
+                {STORYPOINTS.map(({key, label}) => {
+                    const handleClick = () => onClickItem(key);
+                    return <RX.Button key={key} onPress={handleClick}>{label}</RX.Button>
+                })}
             </RX.View>
         );
     }
