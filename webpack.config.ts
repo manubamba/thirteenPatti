@@ -1,10 +1,14 @@
 import * as webpack from 'webpack';
+import * as HtmlWebpackPlugin from 'html-webpack-plugin';
+
+
 
 const config: webpack.Configuration = {
     entry: "./src/index.tsx",
     output: {
         filename: "bundle.js",
-        path: __dirname + "/dist"
+        path: __dirname + "/dist",
+        publicPath: "/dist"
     },
 
     // Enable sourcemaps for debugging webpack's output.
@@ -24,6 +28,7 @@ const config: webpack.Configuration = {
             }
         ]
     },
+    plugins: [new HtmlWebpackPlugin()]
 };
 
 export default config;

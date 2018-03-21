@@ -110,4 +110,4 @@ class MainPanel extends RX.Component<MainPanelProps, null> {
     }
 }
 
-export = MainPanel;
+export default MainPanel;

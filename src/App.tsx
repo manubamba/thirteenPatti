@@ -3,10 +3,10 @@
 */
 // This example uses ExperimentalNavigation on iOS and Android
 import Navigator, { Types, NavigatorDelegateSelector as DelegateSelector } from 'reactxp-navigation';
-import RX = require('reactxp');
+import * as RX  from 'reactxp';
 
-import MainPanel = require('./MainPanel');
-import SecondPanel = require('./SecondPanel');
+import MainPanel from './MainPanel';
+import SecondPanel from './SecondPanel';
 import MainPageContainer from './containers/MainPageContainer';
 import { Provider } from 'react-redux';
 import store from './store/getStore';
@@ -14,7 +14,8 @@ import CreateSessionContainer from './containers/CreateSessionContainer';
 import CommonJoinContainer from './containers/CommonJoinContainer';
 import SharedJoinContainer from './containers/SharedJoinContainer';
 
-
+import socket from './store/socket';
+console.log(socket);
 enum NavigationRouteId {
     CreateSession,
     JoinSession,
@@ -84,4 +85,4 @@ class App extends RX.Component<{}, null> {
     }
 }
 
-export = App;
+export default App;

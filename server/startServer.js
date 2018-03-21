@@ -2,7 +2,7 @@
  How to use sockets in client:
  export function initCommunication() {
     console.log('initializing');
-    io = socket('http://localhost:3001/');
+    io = socket('http://localhost:3001/<sessionid>');
     io.on('updatestate', state => {
         stateMutator(state);
     });
@@ -30,7 +30,10 @@ function startServer() {
     // CreateSession - (SessionTitle, UserName) => (ParticipantId, state)
     app.post('/createsession', (req, res) => {
         Log('Creating new session');
-        res.send(CreateSession(req.body.sessionTitle, req.body.userName));
+        var response = CreateSession(req.body.sessionTitle, req.body.userName);
+
+        InitializeSessionNamespace(response.state.sessionId, io);
+        res.send(response);
     });
 
     // JoinSession - (SessionId, UserName) => (ParticipantId, state)
@@ -39,46 +42,6 @@ function startServer() {
         res.send(JoinSession(req.body.sessionId, req.body.userName));
     });
 
-    // Initializing web sockets
-    io.on('connection', (socket) => { 
-        Log('User connected');
-
-        // Clean up
-        socket.on('disconnect', reason => Log('Disconnected: ' + reason));
-
-        // Vote - (sessionId, participantId, estimate) => ()
-        socket.on('vote', state => {
-            Log('Before voting: ' + sessionStates[state.sessionId]);
-            Vote(state.sessionId, state.participantId, state.estimate);
-            Log('After voting: ' + sessionStates[state.sessionId]);
-
-            // let updatedState = state;
-            // updatedState.sessionId++;
-            // io.emit('updatestate', updatedState);
-        });
-
-        // finalize - (sessionId, participantId, estimate) => ()
-        socket.on('finalize', state => {
-            Log('Before Finalizing: ' + sessionStates[state.sessionId]);
-            Finalize(state.sessionId, state.participantId, state.estimate);
-            Log('After Finalizing: ' + sessionStates[state.sessionId]);
-
-        });
-
-        // resetvotes - (sessionId, participantId) => ()
-        socket.on('resetvotes', state => {
-            Log('Before Resetting votes: ' + sessionStates[state.sessionId]);
-            ResetVotes(state.sessionId, state.participantId);
-            Log('After Resetting votes: ' + sessionStates[state.sessionId]);
-        });
-
-        // kickuser - (sessionId, participantId, badParticipantId) => ()
-        socket.on('kickuser', state => {
-            Log('Before kicking: ' + sessionStates[state.sessionId]);
-            KickUser(state.sessionId, state.participantId, state.badParticipantId);
-            Log('After kicking: ' + sessionStates[state.sessionId]);
-        });
-    });
     http.listen(3001, () => Log('listening on port 3001'));
 }
 
@@ -86,6 +49,77 @@ startServer();
 
 var sessionStates = {};
 var nextParticipantId = 0;
+
+/**
+ * Initializes the session namespace
+ * @param {id of the session} sessionId 
+ * @param {io object} io 
+ */
+function InitializeSessionNamespace(sessionId, io) {
+    var namespaceName = '/' + sessionId;
+    var nsp = io.of(namespaceName);
+
+    nsp.on('connection', (socket) => { 
+        Log('User connected');
+
+        // Clean up
+        socket.on('disconnect', reason => Log('Disconnected: ' + reason));
+
+        // Vote - (participantId, estimate) => ()
+        socket.on('vote', state => {
+            Log('Before voting: ' + JSON.stringify(sessionStates[sessionId]));
+            Vote(sessionId, state.participantId, state.estimate);
+            Log('After voting: ' + JSON.stringify(sessionStates[sessionId]));
+
+            nsp.emit('updatestate', sessionStates[sessionId]);
+        });
+
+        // finalize - (participantId, estimate) => ()
+        socket.on('finalize', state => {
+            Log('Before Finalizing: ' + JSON.stringify(sessionStates[sessionId]));
+            Finalize(sessionId, state.participantId, state.estimate);
+            Log('After Finalizing: ' + JSON.stringify(sessionStates[sessionId]));
+
+            nsp.emit('updatestate', sessionStates[sessionId]);
+        });
+
+        // resetvotes - (participantId) => ()
+        socket.on('resetvotes', state => {
+            Log('Before Resetting votes: ' + JSON.stringify(sessionStates[sessionId]));
+            ResetVotes(sessionId, state.participantId);
+            Log('After Resetting votes: ' + JSON.stringify(sessionStates[sessionId]));
+
+            nsp.emit('updatestate', sessionStates[sessionId]);
+        });
+
+        // kickuser - (participantId, badParticipantId) => ()
+        socket.on('kickuser', state => {
+            Log('Before kicking: ' + JSON.stringify(sessionStates[sessionId]));
+            KickUser(sessionId, state.participantId, state.badParticipantId);
+            Log('After kicking: ' + JSON.stringify(sessionStates[sessionId]));
+
+            nsp.emit('updatestate', sessionStates[sessionId]);
+        });
+
+        // nextstory - () => ()
+        socket.on('nextstory', () => {
+            Log('Before nextstory: ' + JSON.stringify(sessionStates[sessionId]));
+            NextStory(sessionId);
+            Log('After nextstory: ' + JSON.stringify(sessionStates[sessionId]));
+
+            nsp.emit('updatestate', sessionStates[sessionId]);
+        });
+
+        // previousstory - () => ()
+        socket.on('previousstory', () => {
+            Log('Before previousstory: ' + JSON.stringify(sessionStates[sessionId]));
+            PreviousStory(sessionId);
+            Log('After previousstory: ' + JSON.stringify(sessionStates[sessionId]));
+
+            nsp.emit('updatestate', sessionStates[sessionId]);
+        });
+    });
+}
 
 /**
  * Creates the session
@@ -141,7 +175,7 @@ function JoinSession(sessionId, userName) {
  */
 function Vote(sessionId, participantId, estimate) {
     let votes = sessionStates[sessionId].votes;
-    for(var vote in votes) {
+    for(var vote of votes) {
         if (vote.participantId == participantId) {
             vote.estimate = estimate;
             return;
@@ -181,7 +215,7 @@ function ResetVotes(sessionId, participantId) {
     }
 
     let sessionState = sessionStates[sessionId];
-    for (var vote in sessionState.votes) {
+    for (var vote of sessionState.votes) {
         vote.estimate = undefined;
     }
 }
@@ -200,11 +234,30 @@ function KickUser(sessionId, participantId, badParticipantId) {
 
     let votes = sessionStates[sessionId].votes;
     var i = 0;
-    for(var vote in votes) {
+    for(var vote of votes) {
         if (vote.participantId == participantId) {
             votes.splice(i, 1);
         }
         i++;
+    }
+}
+
+/**
+ * Navigate to the next story
+ */
+function NextStory(sessionId) {
+    var sessionState = sessionStates[sessionId];
+    sessionState.currentStoryIndex = (sessionState.currentStoryIndex + 1) % sessionState.stories.length;
+}
+
+/**
+ * Navigate to the previous story
+ */
+function PreviousStory(sessionId) {
+    var sessionState = sessionStates[sessionId];
+    sessionState.currentStoryIndex--;
+    if (sessionState.currentStoryIndex == -1) {
+        sessionState.currentStoryIndex = sessionState.stories.length - 1;
     }
 }
 
@@ -217,7 +270,7 @@ function Log(line) {
 
 function isAdmin(sessionId, participantId) {
     let sessionState = sessionStates[sessionId];
-    for(var vote in sessionState.votes) {
+    for(var vote of sessionState.votes) {
         if (vote.participantId == participantId) {
             return vote.isAdmin;
         }
