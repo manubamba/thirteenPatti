@@ -1,15 +1,5 @@
 import * as RX from 'reactxp';
-
-export interface ICommonJoinProps {
-    joinSession: (name: string, sessionId: string) => void
-}
-
-export interface ICommonJoinState {
-    name: string;
-    sessionId: string;
-    hasError: boolean;
-    errorMsg: string;
-}
+import { ICommonJoinProps, ICommonJoinState } from '../../interfaces/CommonJoin';
 
 export default class CommonJoin extends RX.Component<ICommonJoinProps, ICommonJoinState> {
     constructor(props: ICommonJoinProps) {

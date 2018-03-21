@@ -2,22 +2,19 @@ import * as RX from 'reactxp';
 import MainPage from '../components/mainPage/MainPage';
 import getStore from '../store/getStore';
 import { connect } from 'react-redux';
-import AppStore from '../store/AppStore';
+import { IReduxState } from '../interfaces/commonInterfaces';
 
-const mapStateToProps = ({isAdmin, participants, sessionId, sessionTitle, storyTitle, votes}: any) => ({
-    isAdmin,
-    participants,
-    sessionId,
-    sessionTitle,
-    storyTitle,
-    votes
+const mapStateToProps = ({app, story}: IReduxState) => ({
+    sessionId: app.sessionId,
+    sessionTitle: app.sessionTitle,
+    participants: app.participants,
+    currentUser: app.currentUser,
+    votes: app.votes,
+    storyId: story.storyId,
+    storyTitle: story.storyTitle,
+    storyDescription: story.storyDescription,
+    finalVote: story.finalVote,
+    storyStatus: story.storyStatus
 });
 
-export class MainPageContainer extends RX.Component<any, any> {
-    render() {
-        const {isAdmin, participants, sessionId, sessionTitle, storyTitle, votes} = this.props;
-        return (<MainPage isAdmin={isAdmin} storyTitle={storyTitle} sessionId={sessionId}/>)
-    }
-}
-
-export default connect(mapStateToProps)(MainPageContainer);
+export default connect(mapStateToProps, null)(MainPage);

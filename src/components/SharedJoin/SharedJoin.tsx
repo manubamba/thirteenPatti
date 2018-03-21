@@ -1,17 +1,8 @@
 import * as RX from 'reactxp';
+import { ISharedJoinProps, ISharedJoinState } from '../../interfaces/SharedJoin';
 
-export interface ICommonJoinProps {
-    joinSession: (name: string) => void
-}
-
-export interface ICommonJoinState {
-    name: string;
-    hasError: boolean;
-    errorMsg: string;
-}
-
-export default class CommonJoin extends RX.Component<ICommonJoinProps, ICommonJoinState> {
-    constructor(props: ICommonJoinProps) {
+export default class CommonJoin extends RX.Component<ISharedJoinProps, ISharedJoinState> {
+    constructor(props: ISharedJoinProps) {
         super(props);
         this.state = {
             name: "",
@@ -23,7 +14,7 @@ export default class CommonJoin extends RX.Component<ICommonJoinProps, ICommonJo
     private handleJoin = () => {
         const {name} = this.state;
         if (name) {
-            this.props.joinSession(name);
+            this.props.joinSession(name, '1');
         } else {
             this.setState({
                 hasError: true,

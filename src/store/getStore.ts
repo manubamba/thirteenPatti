@@ -1,6 +1,5 @@
 import { applyMiddleware, createStore } from 'redux';
-import AppStore from './AppStore';
-import appReducer from './appReducer';
 import ReduxThunk from 'redux-thunk';
+import combinedReducers from './combinedReducers';
 
-export default createStore(appReducer, applyMiddleware(ReduxThunk));
+export default createStore(combinedReducers, applyMiddleware(ReduxThunk));

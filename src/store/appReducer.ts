@@ -1,11 +1,14 @@
-import AppStore from './AppStore';
+import IAppStore from "../interfaces/IAppStore";
 
-const initialState: AppStore = {
+const initialState: IAppStore = {
     sessionId: null,
-    storyTitle: null,
-    isAdmin: false,
     participants: [],
     sessionTitle: null,
+    currentUser: {
+        name: "",
+        id: 0,
+        isAdmin: false
+    },
     votes: []
 }
 

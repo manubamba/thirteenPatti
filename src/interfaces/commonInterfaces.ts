@@ -1,3 +1,6 @@
+import IAppStore from "./IAppStore";
+import { IStoryStore } from "./IStoryStore";
+
 export interface IPerson {
     name: string;
     id: number;
@@ -16,4 +19,9 @@ export enum EStoryState {
     ACTIVE = 'active',
     DISCUSSION = 'discussion',
     FINALISED = 'finalised'
+}
+
+export interface IReduxState {
+    app: IAppStore;
+    story: IStoryStore;
 }
