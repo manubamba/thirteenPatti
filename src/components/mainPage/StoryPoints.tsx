@@ -1,4 +1,5 @@
 import * as RX from 'reactxp';
+import UiButton from '../../uiElemComponents/UiButton';
 
 export interface StoryPointsProps {
     onClickItem: (key: string) => void;
@@ -75,7 +76,7 @@ export default class StoryPoints extends RX.Component<StoryPointsProps, any> {
             <RX.View>
                 {STORYPOINTS.map(({key, label}) => {
                     const handleClick = () => onClickItem(key);
-                    return <RX.Button key={key} onPress={handleClick}><RX.Text>{label}</RX.Text></RX.Button>
+                    return <UiButton key={key} onPress={handleClick} title={label}></UiButton>
                 })}
             </RX.View>
         );

@@ -1,5 +1,8 @@
 import * as RX from 'reactxp';
 import { ISharedJoinProps, ISharedJoinState } from '../../interfaces/SharedJoin';
+import Header from '../Header/Header';
+import UiButton from '../../uiElemComponents/UiButton';
+import UiInput from '../../uiElemComponents/UiInput';
 
 export default class CommonJoin extends RX.Component<ISharedJoinProps, ISharedJoinState> {
     constructor(props: ISharedJoinProps) {
@@ -35,9 +38,12 @@ export default class CommonJoin extends RX.Component<ISharedJoinProps, ISharedJo
         const {name, hasError, errorMsg} = this.state;
         return (
             <RX.View>
-                <RX.TextInput placeholder="Enter your Name" value={name} onChangeText={this.handleChange('name')} />
-                <RX.Button title="Join" onPress={this.handleJoin}><RX.Text>Join</RX.Text></RX.Button>
-                {!!hasError && <RX.Text>{errorMsg}</RX.Text>}
+                <Header title="Join Shared Session" navigator={this.props.navigator} enableBackNav={true} />
+                <RX.View>
+                    <UiInput placeholder="Enter your Name" value={name} onChangeText={this.handleChange('name')} />
+                    <UiButton title="Join" onPress={this.handleJoin}></UiButton>
+                    {!!hasError && <RX.Text>{errorMsg}</RX.Text>}
+                </RX.View>
             </RX.View>
         );
     }

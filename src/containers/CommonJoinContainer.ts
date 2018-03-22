@@ -2,7 +2,7 @@ import * as RX from 'reactxp';;
 import getStore from '../store/getStore';
 import { connect } from 'react-redux';
 import { IReduxState } from '../interfaces/commonInterfaces';
-import CommonJoin from '../components/SharedJoin/SharedJoin';
+import CommonJoin from '../components/CommonJoin/commonJoin';
 import { joinSession } from '../actions/appActions';
 
 const mapDispatchToProps = (dispatch: any) => {

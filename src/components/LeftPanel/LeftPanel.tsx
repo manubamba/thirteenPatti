@@ -1,6 +1,7 @@
 import * as RX from 'reactxp';
 import { IPerson, EStoryState } from '../../interfaces/commonInterfaces';
 import TableView, {ITableViewProps, Ifield} from "../TableView/TableView";
+import UiButton from '../../uiElemComponents/UiButton';
 
 export interface ILeftPanelProps {
     kickOut: (personId: number) => void;
@@ -16,13 +17,7 @@ interface IAdminProps {
     isAdmin: boolean;
 }
 const AdminComponent = ({toggleAdmin, isAdmin, personId}: IAdminProps) => (
-    <RX.Button onPressOut={(e: RX.Types.SyntheticEvent) => toggleAdmin(personId)}>
-        <RX.Text>
-            {
-                isAdmin ? '\u2713' : ""
-            }
-        </RX.Text>
-    </RX.Button>
+    <UiButton onPressOut={(e: RX.Types.SyntheticEvent) => toggleAdmin(personId)} title={isAdmin ? '\u2713' : ""} />
 )
 
 interface IKickProps {
@@ -30,9 +25,7 @@ interface IKickProps {
     personId: number;
 }
 const KickComponent = ({kickOut, personId}: IKickProps) => (
-    <RX.Button onPressOut={(e: RX.Types.SyntheticEvent) => kickOut(personId)}>
-        <RX.Text>{'\u2715'}</RX.Text>
-    </RX.Button>
+    <UiButton onPressOut={(e: RX.Types.SyntheticEvent) => kickOut(personId)} title={'\u2715'} />
 )
 
 enum FieldKeys {

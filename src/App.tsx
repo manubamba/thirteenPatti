@@ -15,12 +15,14 @@ import CommonJoinContainer from './containers/CommonJoinContainer';
 import SharedJoinContainer from './containers/SharedJoinContainer';
 
 import socket from './store/socket';
+import HomePage from './components/HomePage/HomePage';
 console.log(socket);
 export enum NavigationRouteId {
     CreateSession,
     JoinSession,
     JoinSharedSession,
-    MainStory
+    MainStory,
+    HomePage
 }
 
 const styles = {
@@ -35,7 +37,7 @@ class App extends RX.Component<{}, null> {
 
     componentDidMount() {
         this._navigator.immediatelyResetRouteStack([{
-            routeId: NavigationRouteId.CreateSession,
+            routeId: NavigationRouteId.HomePage,
             sceneConfigType: Types.NavigatorSceneConfigType.Fade
         }]);
     }
@@ -60,8 +62,10 @@ class App extends RX.Component<{}, null> {
     private _renderScene = (navigatorRoute: Types.NavigatorRoute) => {
         const navProp = {navigator: this._navigator};
         switch (navigatorRoute.routeId) {
+            case NavigationRouteId.HomePage:
+                return <RX.View><HomePage {...navProp} /></RX.View>
             case NavigationRouteId.MainStory:
-                return<RX.View><MainPageContainer {...navProp} /></RX.View>;
+                return <RX.View><MainPageContainer {...navProp} /></RX.View>;
             case NavigationRouteId.CreateSession:
                 return <RX.View><CreateSessionContainer {...navProp}/></RX.View>;
             case NavigationRouteId.JoinSession:

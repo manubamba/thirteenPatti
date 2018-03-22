@@ -3,6 +3,9 @@ import StoryPoints from './StoryPoints';
 import LeftPanel from '../LeftPanel/LeftPanel';
 import { EStoryState, IPerson } from '../../interfaces/commonInterfaces';
 import { MainPageState, MainPageProps } from '../../interfaces/MainPage';
+import Header from '../Header/Header';
+import UiButton from '../../uiElemComponents/UiButton';
+import UiInput from '../../uiElemComponents/UiInput';
 
 export default class MainPage extends RX.Component<MainPageProps, MainPageState> {
     constructor(props: any) {
@@ -49,24 +52,27 @@ export default class MainPage extends RX.Component<MainPageProps, MainPageState>
             storyStatus
         }
         return (
-            <RX.ScrollView>
-                <RX.View>
-                    <RX.Text>ID:</RX.Text>
-                    <RX.Text>{sessionId}</RX.Text>
-                </RX.View>
-                <RX.View>
-                    <RX.Text>Story:</RX.Text>
-                    <RX.TextInput placeholder="Please enter the story title here" onChangeText={this.handleStoryTextChange} value={storyTitle}/>
-                </RX.View>
-                <LeftPanel {...props}/>
-                <StoryPoints onClickItem={this.handleStoryPointClick} chosenValue={selectedPoints}/>
-                {!!currentUser.isAdmin && <RX.View>
-                    <RX.Button onPress={onClickResetVotes}><RX.Text>Reset Votes</RX.Text></RX.Button>
-                    <RX.TextInput placeholder="Final Value" onChangeText={this.handleFinalPointsChange} value={finalPoints}/>
-                    <RX.Button onPress={this.handleFinalize}><RX.Text>Finalize</RX.Text></RX.Button>
+            <RX.View>
+                <Header title="Story" navigator={this.props.navigator} enableBackNav={true} />
+                <RX.ScrollView>
+                    <RX.View>
+                        <RX.Text>ID:</RX.Text>
+                        <RX.Text>{sessionId}</RX.Text>
                     </RX.View>
-                }
-            </RX.ScrollView>
+                    <RX.View>
+                        <RX.Text>Story:</RX.Text>
+                        <UiInput placeholder="Please enter the story title here" onChangeText={this.handleStoryTextChange} value={storyTitle}/>
+                    </RX.View>
+                    <LeftPanel {...props}/>
+                    <StoryPoints onClickItem={this.handleStoryPointClick} chosenValue={selectedPoints}/>
+                    {!!currentUser.isAdmin && <RX.View>
+                        <UiButton onPress={onClickResetVotes} title='Reset Votes'></UiButton>
+                        <UiInput placeholder="Final Value" onChangeText={this.handleFinalPointsChange} value={finalPoints}/>
+                        <UiButton onPress={this.handleFinalize} title='Finalize'></UiButton>
+                        </RX.View>
+                    }
+                </RX.ScrollView>
+            </RX.View>
         );
     }
 } 
