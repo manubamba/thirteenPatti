@@ -63,7 +63,7 @@ class App extends RX.Component<{}, null> {
             case NavigationRouteId.MainStory:
                 return <MainPageContainer {...navProp} />;
             case NavigationRouteId.CreateSession:
-                return <CreateSessionContainer {...navProp} />;
+                return <CreateSessionContainer {...navProp} onCreateSession={this._onPressNavigate}/>;
             case NavigationRouteId.JoinSession:
                 return <CommonJoinContainer {...navProp} />;
             case NavigationRouteId.JoinSharedSession:

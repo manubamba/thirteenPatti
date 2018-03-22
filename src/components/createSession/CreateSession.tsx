@@ -12,7 +12,7 @@ export default class CreateSession extends RX.Component<CreateSessionProps, Crea
     private handleCreate = () => {
         const {name, sessionName} = this.state;
         if (name) {
-            this.props.createSession(name, sessionName);
+            this.props.createSession(name, sessionName, this.props.onCreateSession);
         } else {
             this.setState({hasError: true});
         }
