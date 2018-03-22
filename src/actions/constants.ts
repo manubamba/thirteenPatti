@@ -11,7 +11,7 @@ export const STORY_TITLE_CHANGE = 'STORY_TITLE_CHANGE';
 export const TOGGLE_ADMIN = 'TOGGLE_ADMIN';
 export const KICK_PARTICIPANT = 'KICK_PARTICIPANT';
 
-export const BASE_URL = "http://http://172.23.209.58:3001/";
+export const BASE_URL = "http://localhost:8080/api/";
 export const CREATE_SESSION_URL = "createsession";
 export const JOIN_SESSION_URL = "joinsession";
 export const DIRECT_JOIN_SESSION_URL = "joinsession";

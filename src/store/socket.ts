@@ -1,6 +1,6 @@
 import * as socket from 'socket.io-client';
 
-export function initCommunication(sessionId: number) {
+export default function initCommunication(sessionId: number) {
     console.log('initializing');
     const io = socket('http://localhost:3001/' + sessionId);
     io.on('updatestate', (state: any) => {
@@ -33,6 +33,3 @@ export function initCommunication(sessionId: number) {
 
     return io;
 }
-
-export default initCommunication(12345);
-

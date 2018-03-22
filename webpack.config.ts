@@ -13,6 +13,14 @@ const config: webpack.Configuration = {
 
     // Enable sourcemaps for debugging webpack's output.
     devtool: "source-map",
+    devServer: {
+        proxy: {
+            '/api': {
+              target: 'http://localhost:3001',
+              pathRewrite: {'^/api' : ''}
+            }
+        }
+    },
 
     resolve: {
         // Add '.ts' and '.tsx' as resolvable extensions.
