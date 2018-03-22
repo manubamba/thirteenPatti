@@ -46,8 +46,8 @@ export default class CreateSession extends RX.Component<CreateSessionProps, Crea
             <RX.View>
                 <RX.TextInput placeholder="Enter your Name" value={name} onChangeText={this.handleNameChange} />
                 <RX.TextInput placeholder="Enter a name for the session" value={sessionName} onChangeText={this.handleSessionNameChange} />
-                <RX.Button title="Create" onPress={this.handleCreate}>Create</RX.Button>
-                {hasError && <RX.Text>Please enter the name</RX.Text>}
+                <RX.Button title="Create" onPress={this.handleCreate}><RX.Text>Create</RX.Text></RX.Button>
+                {!!hasError && <RX.View><RX.Text>Please enter the name</RX.Text></RX.View>}
             </RX.View>
         );
     }

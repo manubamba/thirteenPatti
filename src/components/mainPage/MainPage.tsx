@@ -60,10 +60,10 @@ export default class MainPage extends RX.Component<MainPageProps, MainPageState>
                 </RX.View>
                 <LeftPanel {...props}/>
                 <StoryPoints onClickItem={this.handleStoryPointClick} chosenValue={selectedPoints}/>
-                {currentUser.isAdmin && <RX.View>
-                    <RX.Button onPress={onClickResetVotes}>Reset Votes</RX.Button>
+                {!!currentUser.isAdmin && <RX.View>
+                    <RX.Button onPress={onClickResetVotes}><RX.Text>Reset Votes</RX.Text></RX.Button>
                     <RX.TextInput placeholder="Final Value" onChangeText={this.handleFinalPointsChange} value={finalPoints}/>
-                    <RX.Button onPress={this.handleFinalize}>Finalize</RX.Button>
+                    <RX.Button onPress={this.handleFinalize}><RX.Text>Finalize</RX.Text></RX.Button>
                     </RX.View>
                 }
             </RX.ScrollView>

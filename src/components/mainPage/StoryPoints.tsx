@@ -75,7 +75,7 @@ export default class StoryPoints extends RX.Component<StoryPointsProps, any> {
             <RX.View>
                 {STORYPOINTS.map(({key, label}) => {
                     const handleClick = () => onClickItem(key);
-                    return <RX.Button key={key} onPress={handleClick}>{label}</RX.Button>
+                    return <RX.Button key={key} onPress={handleClick}><RX.Text>{label}</RX.Text></RX.Button>
                 })}
             </RX.View>
         );

@@ -61,13 +61,13 @@ class App extends RX.Component<{}, null> {
         const navProp = {navigator: this._navigator};
         switch (navigatorRoute.routeId) {
             case NavigationRouteId.MainStory:
-                return <MainPageContainer {...navProp} />;
+                return<RX.View><MainPageContainer {...navProp} /></RX.View>;
             case NavigationRouteId.CreateSession:
-                return <CreateSessionContainer {...navProp}/>;
+                return <RX.View><CreateSessionContainer {...navProp}/></RX.View>;
             case NavigationRouteId.JoinSession:
-                return <CommonJoinContainer {...navProp} />;
+                return <RX.View><CommonJoinContainer {...navProp} /></RX.View>;
             case NavigationRouteId.JoinSharedSession:
-                return <SharedJoinContainer {...navProp} />;
+                return <RX.View><SharedJoinContainer {...navProp} /></RX.View>;
         }
 
         return null;

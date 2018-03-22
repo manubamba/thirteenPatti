@@ -36,8 +36,8 @@ export default class CommonJoin extends RX.Component<ISharedJoinProps, ISharedJo
         return (
             <RX.View>
                 <RX.TextInput placeholder="Enter your Name" value={name} onChangeText={this.handleChange('name')} />
-                <RX.Button title="Join" onPress={this.handleJoin}>Join</RX.Button>
-                {hasError && <RX.Text>{errorMsg}</RX.Text>}
+                <RX.Button title="Join" onPress={this.handleJoin}><RX.Text>Join</RX.Text></RX.Button>
+                {!!hasError && <RX.Text>{errorMsg}</RX.Text>}
             </RX.View>
         );
     }
