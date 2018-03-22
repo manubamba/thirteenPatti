@@ -16,7 +16,7 @@ import SharedJoinContainer from './containers/SharedJoinContainer';
 
 import socket from './store/socket';
 console.log(socket);
-enum NavigationRouteId {
+export enum NavigationRouteId {
     CreateSession,
     JoinSession,
     JoinSharedSession,
@@ -63,7 +63,7 @@ class App extends RX.Component<{}, null> {
             case NavigationRouteId.MainStory:
                 return <MainPageContainer {...navProp} />;
             case NavigationRouteId.CreateSession:
-                return <CreateSessionContainer {...navProp} onCreateSession={this._onPressNavigate}/>;
+                return <CreateSessionContainer {...navProp}/>;
             case NavigationRouteId.JoinSession:
                 return <CommonJoinContainer {...navProp} />;
             case NavigationRouteId.JoinSharedSession:

@@ -1,5 +1,7 @@
 import * as RX from 'reactxp';
 import { CreateSessionProps, CreateSessionState } from '../../interfaces/CreateSession';
+import Navigator, { Types, NavigatorDelegateSelector as DelegateSelector } from 'reactxp-navigation';
+import { NavigationRouteId } from '../../App';
 
 export default class CreateSession extends RX.Component<CreateSessionProps, CreateSessionState> {
     constructor(props: CreateSessionProps) {
@@ -12,7 +14,14 @@ export default class CreateSession extends RX.Component<CreateSessionProps, Crea
     private handleCreate = () => {
         const {name, sessionName} = this.state;
         if (name) {
-            this.props.createSession(name, sessionName, this.props.onCreateSession);
+            this.props.createSession(name, sessionName)
+            // @TODO - change this logic to navigate to any route- change it to MainStory, right now its JoinSesion
+            .then(() => {
+                this.props.navigator.push({
+                    routeId: NavigationRouteId.JoinSession,
+                    sceneConfigType: Types.NavigatorSceneConfigType.FloatFromRight
+                })
+            })
         } else {
             this.setState({hasError: true});
         }

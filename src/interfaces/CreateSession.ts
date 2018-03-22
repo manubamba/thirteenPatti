@@ -1,12 +1,14 @@
 import { NavigatorImpl } from "reactxp-navigation";
 
 export interface CreateSessionContainer {
-    createSession: (name: string, sessionName: string, onCreateSession: () => void) => Promise<any>
+    // createSession: (name: string, sessionName: string, onCreateSession: () => void) => Promise<any>, //@TODO - no need for this
+    createSession: (name: string, sessionName: string) => Promise<any>,
 }
 
 export interface CreateSessionProps extends CreateSessionContainer {
     navigator: NavigatorImpl,
-    onCreateSession: () => void
+    // @TODO - no need for this
+    // onCreateSession: () => void
 }
 
 export interface CreateSessionState {
